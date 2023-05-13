@@ -57,13 +57,13 @@ public class Main {
     
     public void mainLoop() {
         while (true) {
-            startRound();
+            gameLoop();
             endGameMenu();
         }
     }
     
     
-    public void startRound() {
+    public void gameLoop() {
         // Preventing ball having too much speed and glitching through players
         // In this case we pass in 22.4 as a safe speed for one frame
         int deltaTime = 1000/Settings.FPS*ball.speed < 22.4 ? 1000/Settings.FPS : (int)Math.round(22.4/ball.speed);
@@ -77,7 +77,7 @@ public class Main {
         
         while (window.repeat) {
             move();
-            handleEvents();
+            handleIntersects();
             
             try {
                 Thread.sleep(deltaTime);
@@ -125,7 +125,7 @@ public class Main {
         
     }
     
-    public void handleEvents() {
+    public void handleIntersects() {
         checkBallPlayerColl();
         checkBallWallColl();
         checkForGoals();

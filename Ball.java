@@ -53,7 +53,7 @@ public class Ball extends JPanel {
     }
     
     public void playerColl(Player p, boolean side) {
-        int angle = Math.round(((this.getCenterY()) - (p.getCenterY()))/((float)p.getHeight()/2)*(Settings.ballBounceAngle/2));
+        int angle = Math.round((this.getCenterY() - p.getCenterY())/((float)p.getHeight()/2)*(Settings.ballBounceAngle/2));
         
         velY = (float)(Math.sin(Math.toRadians(angle))*speed);
         velX = side ? (float)(Math.cos(Math.toRadians(angle))*speed) : -(float)(Math.cos(Math.toRadians(angle))*speed);
