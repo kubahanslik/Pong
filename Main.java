@@ -4,6 +4,14 @@
  */
 package pong;
 
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 /**
  *
  * @author jakub
@@ -12,6 +20,9 @@ public class Main {
     Window window;
     Player player1, player2;
     Ball ball;
+    
+    AudioInputStream scoreSound, bounceSound;
+    Clip scoreClip, bounceClip;
     
     long roundStartTime;
     
@@ -23,7 +34,24 @@ public class Main {
         player2 = window.gamePanel.player2;
         ball = window.gamePanel.ball;
         
-        // Starting main loop
+        
+        try {
+            scoreSound = AudioSystem.getAudioInputStream(new File("C:\\Users\\jakub\\OneDrive\\Documents\\Programovani\\Java\\Test\\src\\audio\\score.wav"));
+            scoreClip = AudioSystem.getClip();
+            scoreClip.open(scoreSound);
+            
+            bounceSound = AudioSystem.getAudioInputStream(new File("C:\\Users\\jakub\\OneDrive\\Documents\\Programovani\\Java\\Test\\src\\audio\\bounce.wav"));
+            bounceClip = AudioSystem.getClip();
+            bounceClip.open(bounceSound);
+        } catch (UnsupportedAudioFileException ex) {
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } catch (LineUnavailableException ex) {
+            System.out.println(ex);
+        }
+        
+// Starting main loop
         mainLoop();
     }
     
@@ -107,10 +135,14 @@ public class Main {
         // Checking if ball doesnt collide with player1
         if (player1.getX() + player1.getWidth() >= ball.getX() && player1.getX() <= ball.getX() && player1.getY() <= ball.getY() +  ball.getWidth()/2 && player1.getY() + player1.getHeight() >= ball.getCenterY()) {
             ball.playerColl(player1, true);
+            bounceClip.setMicrosecondPosition(0);
+            bounceClip.start();
         }
         // Checking if ball doesnt collide with player2
         else if (player2.getX() + player2.getWidth() >= ball.getX() + ball.getWidth() && player2.getX() <= ball.getX() + ball.getWidth()  && player2.getY() <= ball.getY() +  ball.getWidth()/2 && player2.getY() + player2.getHeight() >= ball.getCenterY()) {
             ball.playerColl(player2, false);
+            bounceClip.setMicrosecondPosition(0);
+            bounceClip.start();
         }
     }
     
@@ -118,6 +150,9 @@ public class Main {
         // Checking if the ball didnt hit top or bottom of our window
         if (ball.getY() <= 0 || ball.getY() + ball.getHeight() >= window.gamePanel.getHeight()) {
             ball.velY = -ball.velY; // Inverting the velY
+            
+            bounceClip.setMicrosecondPosition(0);
+            bounceClip.start();
         }
     }
     
@@ -127,12 +162,18 @@ public class Main {
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), true);
             roundStartTime = System.currentTimeMillis();
             window.repeat = player1.points != Settings.winningPoints; // Checking if player1 didnt win
+            
+            scoreClip.setMicrosecondPosition(0);
+            scoreClip.start();
         } 
         else if (ball.getX() + ball.getWidth() <=0) { // Checking if player2 didnt score
             player2.scored(window.gamePanel.scoreLabel2);
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), false);
             roundStartTime = System.currentTimeMillis(); // Reseting our round time
             window.repeat = player2.points != Settings.winningPoints; // Checking if player2 didnt win
+            
+            scoreClip.setMicrosecondPosition(0);
+            scoreClip.start();
         }
     }
     
