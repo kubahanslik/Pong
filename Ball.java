@@ -17,17 +17,16 @@ public class Ball extends JPanel {
     float posX, posY, velX, velY;
     
     static float speed = 0.8f;
-    public static final float ballSpeed = 0.8f;
-    public static final int ballDiameter = 10;
-    public static final int ballRadius = ballDiameter/2;
-    public static final int ballBounceAngle = 120;
+    public static final int DIAMETER = 10;
+    public static final int RADIUS = DIAMETER/2;
+    public static final int MAX_BOUNCE_ANGLE = 120;
     
     public Ball(int x, int y) {
         init(x, y);
     }
     
     public void init(int x, int y) {
-        this.setBounds(x, y, ballDiameter, ballDiameter);
+        this.setBounds(x, y, DIAMETER, DIAMETER);
         
         posX = x;
         posY = y;
@@ -58,7 +57,7 @@ public class Ball extends JPanel {
     }
     
     public void playerColl(Player p, boolean side) {
-        int angle = Math.round((this.getCenterY() - p.getCenterY())/((float)p.getHeight()/2)*(ballBounceAngle/2));
+        int angle = Math.round((this.getCenterY() - p.getCenterY())/((float)p.getHeight()/2)*(MAX_BOUNCE_ANGLE/2));
         
         velY = (float)(Math.sin(Math.toRadians(angle))*speed);
         velX = side ? (float)(Math.cos(Math.toRadians(angle))*speed) : -(float)(Math.cos(Math.toRadians(angle))*speed);

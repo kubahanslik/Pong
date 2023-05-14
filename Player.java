@@ -18,10 +18,9 @@ public class Player extends JPanel {
     int points;
     
     public static float speed = 0.5f;
-    public static final float playerSpeed = 0.5f;
-    public static final int playerWidth = 12;
-    public static final int playerHeight = 90;
-    public static final int marginFromSideWall = 20;
+    public static final int WIDTH = 12;
+    public static final int HEIGHT = 90;
+    public static final int MARGIN_FROM_SIDE_WALL = 20;
     
     public Player(int x, int y) {
         init(x, y);
@@ -29,7 +28,7 @@ public class Player extends JPanel {
     
     // Making function for initialization of our object will make it easier in the future to reset position of our player
     public void init(int x, int y) {
-        this.setBounds(x, y, playerWidth, playerHeight);
+        this.setBounds(x, y, WIDTH, HEIGHT);
         this.setBackground(Color.gray);
         
         posY = y;

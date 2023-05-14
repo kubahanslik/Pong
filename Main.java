@@ -26,7 +26,7 @@ public class Main {
     
     int deltaTime;
     long roundStartTime;
-    public static final int winningPoints = 3;
+    public static final int WINNING_POINTS = 1;
     
     public Main() {
         window = new Window();
@@ -55,7 +55,7 @@ public class Main {
     
     public void mainLoop() {
         // Preventing ball having too much speed and glitching through players
-        // In this case we pass in 22.4 as a safe speed for one iteration
+        // In this case we pass in 22.4 as the highest possible ball speed for one iteration
         deltaTime = 1000/Window.FPS*ball.speed < 22.4 ? 1000/Window.FPS : (int)Math.round(22.4/ball.speed);
         
         // By multiplying speed with delta time the players and the ball will always look like it is moving the same speed, no matter what FPS you set
@@ -87,7 +87,7 @@ public class Main {
     
     public void endGameMenu() {
         ball.setVisible(false); // If we didnt set the ball unvisible, we wouldnt see the text clearly
-        window.gamePanel.showEndingScreen(player1.points == winningPoints ? "Left side won" : "Right side won");
+        window.gamePanel.endGamePanel.showEndingScreen(player1.points == WINNING_POINTS ? "Left side won" : "Right side won");
         while (!window.repeat) {
             try {
                 Thread.sleep(10);
@@ -95,7 +95,7 @@ public class Main {
                 System.out.println(ex);
             }
         }
-        window.gamePanel.hideEndingScreen();
+        window.gamePanel.endGamePanel.hideEndingScreen();
         window.gamePanel.resetComponents(); // Reseting positions of our components
         ball.setVisible(true);
     }
@@ -149,8 +149,9 @@ public class Main {
         if (ball.getY() <= 0 || ball.getY() + ball.getHeight() >= window.gamePanel.getHeight()) {
             ball.velY = -ball.velY; // Inverting the velY
             
+            // Playing bounce sound
             bounceClip.setMicrosecondPosition(0);
-            bounceClip.start();
+            bounceClip.start(); 
         }
     }
     
@@ -159,7 +160,7 @@ public class Main {
             player1.scored(window.gamePanel.scoreLabel1);
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), true);
             roundStartTime = System.currentTimeMillis();
-            window.repeat = player1.points != winningPoints; // Checking if player1 didnt win
+            window.repeat = player1.points != WINNING_POINTS; // Checking if player1 didnt win
             
             scoreClip.setMicrosecondPosition(0);
             scoreClip.start();
@@ -168,7 +169,7 @@ public class Main {
             player2.scored(window.gamePanel.scoreLabel2);
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), false);
             roundStartTime = System.currentTimeMillis(); // Reseting our round time
-            window.repeat = player2.points != winningPoints; // Checking if player2 didnt win
+            window.repeat = player2.points != WINNING_POINTS; // Checking if player2 didnt win
             
             scoreClip.setMicrosecondPosition(0);
             scoreClip.start();
