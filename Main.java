@@ -26,7 +26,7 @@ public class Main {
     
     int deltaTime;
     long roundStartTime;
-    public static final int WINNING_POINTS = 1;
+    public static final int WINNING_POINTS = 10;
     
     public Main() {
         window = new Window();
@@ -36,13 +36,12 @@ public class Main {
         player2 = window.gamePanel.player2;
         ball = window.gamePanel.ball;
         
-        
         try {
-            scoreSound = AudioSystem.getAudioInputStream(new File("C:\\Users\\jakub\\OneDrive\\Documents\\Programovani\\Java\\Test\\src\\audio\\score.wav"));
+            scoreSound = AudioSystem.getAudioInputStream(new File(getClass().getResource("../audio/score.wav").getPath()));
             scoreClip = AudioSystem.getClip();
             scoreClip.open(scoreSound);
             
-            bounceSound = AudioSystem.getAudioInputStream(new File("C:\\Users\\jakub\\OneDrive\\Documents\\Programovani\\Java\\Test\\src\\audio\\bounce.wav"));
+            bounceSound = AudioSystem.getAudioInputStream(new File(getClass().getResource("../audio/bounce.wav").getPath()));
             bounceClip = AudioSystem.getClip();
             bounceClip.open(bounceSound);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
@@ -58,7 +57,7 @@ public class Main {
         // In this case we pass in 22.4 as the highest possible ball speed for one iteration
         deltaTime = 1000/Window.FPS*ball.speed < 22.4 ? 1000/Window.FPS : (int)Math.round(22.4/ball.speed);
         
-        // By multiplying speed with delta time the players and the ball will always look like it is moving the same speed, no matter what FPS you set
+        // By multiplying speed with delta time the players and the ball will always look like they are moving the same speed, no matter what FPS you set
         Player.speed *= deltaTime;
         Ball.speed *= deltaTime;
         
@@ -88,7 +87,7 @@ public class Main {
     public void endGameMenu() {
         ball.setVisible(false); // If we didnt set the ball unvisible, we wouldnt see the text clearly
         window.gamePanel.endGamePanel.showEndingScreen(player1.points == WINNING_POINTS ? "Left side won" : "Right side won");
-        while (!window.repeat) {
+        while (!window.repeat) { // Repeating the loop, until user presses space and repeat will be true
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {
@@ -96,7 +95,7 @@ public class Main {
             }
         }
         window.gamePanel.endGamePanel.hideEndingScreen();
-        window.gamePanel.resetComponents(); // Reseting positions of our components
+        window.gamePanel.resetComponents(); // Reseting positions of our components for a new game
         ball.setVisible(true);
     }
     
@@ -133,12 +132,16 @@ public class Main {
         // Checking if ball doesnt collide with player1
         if (player1.getX() + Player.WIDTH >= ball.getX() && player1.getX() <= ball.getX() && player1.getY() <= ball.getY() +  Ball.DIAMETER/2 && player1.getY() + Player.HEIGHT >= ball.getCenterY()) {
             ball.playerColl(player1, true);
+            
+            // Playing bounce sound
             bounceClip.setMicrosecondPosition(0);
             bounceClip.start();
         }
         // Checking if ball doesnt collide with player2
         else if (player2.getX() + Player.WIDTH >= ball.getX() + Ball.DIAMETER && player2.getX() <= ball.getX() + Ball.DIAMETER  && player2.getY() <= ball.getY() +  Ball.DIAMETER/2 && player2.getY() + Player.HEIGHT >= ball.getCenterY()) {
             ball.playerColl(player2, false);
+            
+            // Playing bounce sound
             bounceClip.setMicrosecondPosition(0);
             bounceClip.start();
         }
@@ -151,7 +154,7 @@ public class Main {
             
             // Playing bounce sound
             bounceClip.setMicrosecondPosition(0);
-            bounceClip.start(); 
+            bounceClip.start();
         }
     }
     
