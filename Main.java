@@ -111,13 +111,13 @@ public class Main {
         if (player1.up && player1.posY > 0) {
             player1.moveUp();
         }
-        if (player1.down && player1.posY + player1.getHeight() < window.gamePanel.getHeight()) {
+        if (player1.down && player1.posY + Player.HEIGHT < window.gamePanel.getHeight()) {
             player1.moveDown();
         }
         if (player2.up && player2.posY > 0) {
             player2.moveUp();
         }
-        if (player2.down && player2.posY + player2.getHeight() < window.gamePanel.getHeight()) {
+        if (player2.down && player2.posY + Player.HEIGHT < window.gamePanel.getHeight()) {
             player2.moveDown();
         }
         
@@ -131,13 +131,13 @@ public class Main {
     
     public void checkBallPlayerColl() {
         // Checking if ball doesnt collide with player1
-        if (player1.getX() + player1.getWidth() >= ball.getX() && player1.getX() <= ball.getX() && player1.getY() <= ball.getY() +  ball.getWidth()/2 && player1.getY() + player1.getHeight() >= ball.getCenterY()) {
+        if (player1.getX() + Player.WIDTH >= ball.getX() && player1.getX() <= ball.getX() && player1.getY() <= ball.getY() +  Ball.DIAMETER/2 && player1.getY() + Player.HEIGHT >= ball.getCenterY()) {
             ball.playerColl(player1, true);
             bounceClip.setMicrosecondPosition(0);
             bounceClip.start();
         }
         // Checking if ball doesnt collide with player2
-        else if (player2.getX() + player2.getWidth() >= ball.getX() + ball.getWidth() && player2.getX() <= ball.getX() + ball.getWidth()  && player2.getY() <= ball.getY() +  ball.getWidth()/2 && player2.getY() + player2.getHeight() >= ball.getCenterY()) {
+        else if (player2.getX() + Player.WIDTH >= ball.getX() + Ball.DIAMETER && player2.getX() <= ball.getX() + Ball.DIAMETER  && player2.getY() <= ball.getY() +  Ball.DIAMETER/2 && player2.getY() + Player.HEIGHT >= ball.getCenterY()) {
             ball.playerColl(player2, false);
             bounceClip.setMicrosecondPosition(0);
             bounceClip.start();
@@ -146,7 +146,7 @@ public class Main {
     
     public void checkBallWallColl() {
         // Checking if the ball didnt hit top or bottom of our window
-        if (ball.getY() <= 0 || ball.getY() + ball.getHeight() >= window.gamePanel.getHeight()) {
+        if (ball.getY() <= 0 || ball.getY() + Ball.DIAMETER >= window.gamePanel.getHeight()) {
             ball.velY = -ball.velY; // Inverting the velY
             
             // Playing bounce sound
