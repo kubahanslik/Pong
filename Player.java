@@ -26,7 +26,7 @@ public class Player extends JPanel {
         init(x, y);
     }
     
-    // Making function for initialization of our object will make it easier in the future to reset position of our player
+    // Making function for initialization of our object will make it easier in the future to reset the position of our player
     public void init(int x, int y) {
         this.setBounds(x, y, WIDTH, HEIGHT);
         this.setBackground(Color.gray);

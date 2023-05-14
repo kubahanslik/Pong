@@ -59,7 +59,7 @@ public class Window extends JFrame implements KeyListener {
                 break;
         }
         
-        if (!repeat && e.getKeyCode() == KeyEvent.VK_SPACE) { // With this condition, we check if user pressed space in our endGameScreen
+        if (!repeat && e.getKeyCode() == KeyEvent.VK_SPACE) { // With this condition, we check if user pressed space in our endGameMenu
             repeat = true;
         }
     }

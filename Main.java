@@ -162,7 +162,7 @@ public class Main {
         if (ball.getX() >= window.gamePanel.getWidth()) { // Checking if player1 didnt score
             player1.scored(window.gamePanel.scoreLabel1);
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), true);
-            roundStartTime = System.currentTimeMillis();
+            roundStartTime = System.currentTimeMillis(); // Reseting round time
             window.repeat = player1.points != WINNING_POINTS; // Checking if player1 didnt win
             
             scoreClip.setMicrosecondPosition(0);
@@ -171,7 +171,7 @@ public class Main {
         else if (ball.getX() + ball.getWidth() <=0) { // Checking if player2 didnt score
             player2.scored(window.gamePanel.scoreLabel2);
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), false);
-            roundStartTime = System.currentTimeMillis(); // Reseting our round time
+            roundStartTime = System.currentTimeMillis(); // Reseting round time
             window.repeat = player2.points != WINNING_POINTS; // Checking if player2 didnt win
             
             scoreClip.setMicrosecondPosition(0);

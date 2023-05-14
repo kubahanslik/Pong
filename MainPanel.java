@@ -34,7 +34,7 @@ public class MainPanel extends JPanel {
         player2 = new Player(this.getWidth() - Player.MARGIN_FROM_SIDE_WALL - Player.WIDTH, this.getHeight()/2 - Player.HEIGHT/2);
         ball = new Ball(this.getWidth()/2 - Ball.RADIUS, this.getHeight()/2 - Ball.RADIUS);
         
-        Font scoreFont = new Font("Arial", Font.BOLD, SCORE_FONT_SIZE); // Saving the font to a variable so if we want to change it we can do it just here
+        Font scoreFont = new Font("Arial", Font.BOLD, SCORE_FONT_SIZE);
         
         scoreLabel1 = new JLabel("0");
         scoreLabel1.setBounds(SCORE_MARGIN_X, SCORE_MARGIN_Y, SCORE_WIDTH, SCORE_HEIGHT);
