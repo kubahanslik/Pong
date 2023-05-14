@@ -13,13 +13,17 @@ import javax.swing.JFrame;
  * @author jakub
  */
 public class Window extends JFrame implements KeyListener {
-    GamePanel gamePanel;
+    MainPanel gamePanel;
     Player player1, player2;
     boolean repeat = true;
     
-    public Window(int width, int height) {
+    public static final int FPS = 120;
+    public static final int WIDTH = 850;
+    public static final int HEIGHT = 800;
+    
+    public Window() {
         this.setTitle("Pong");
-        this.setSize(width, height);
+        this.setSize(WIDTH, HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
@@ -30,7 +34,7 @@ public class Window extends JFrame implements KeyListener {
            We need to set the game panel size to window's content pane size
            If we just passed in the size of the window, we wouldn't be able to set the location of the components right
         */
-        gamePanel = new GamePanel(this.getContentPane().getWidth(), this.getContentPane().getHeight()); 
+        gamePanel = new MainPanel(this.getContentPane().getWidth(), this.getContentPane().getHeight()); 
         
         // Getting easier access to players
         player1 = gamePanel.player1;

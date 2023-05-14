@@ -24,10 +24,12 @@ public class Main {
     AudioInputStream scoreSound, bounceSound;
     Clip scoreClip, bounceClip;
     
+    int deltaTime;
     long roundStartTime;
+    public static final int winningPoints = 3;
     
     public Main() {
-        window = new Window(Settings.windowWidth, Settings.windowHeight);
+        window = new Window();
         
         // Getting easier access to players and ball 
         player1 = window.gamePanel.player1;
@@ -43,19 +45,23 @@ public class Main {
             bounceSound = AudioSystem.getAudioInputStream(new File("C:\\Users\\jakub\\OneDrive\\Documents\\Programovani\\Java\\Test\\src\\audio\\bounce.wav"));
             bounceClip = AudioSystem.getClip();
             bounceClip.open(bounceSound);
-        } catch (UnsupportedAudioFileException ex) {
-            System.out.println(ex);
-        } catch (IOException ex) {
-            System.out.println(ex);
-        } catch (LineUnavailableException ex) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
             System.out.println(ex);
         }
         
-// Starting main loop
+        // Starting main loop
         mainLoop();
     }
     
     public void mainLoop() {
+        // Preventing ball having too much speed and glitching through players
+        // In this case we pass in 22.4 as a safe speed for one iteration
+        deltaTime = 1000/Window.FPS*ball.speed < 22.4 ? 1000/Window.FPS : (int)Math.round(22.4/ball.speed);
+        
+        // By multiplying speed with delta time the players and the ball will always look like it is moving the same speed, no matter what FPS you set
+        Player.speed *= deltaTime;
+        Ball.speed *= deltaTime;
+        
         while (true) {
             gameLoop();
             endGameMenu();
@@ -64,14 +70,6 @@ public class Main {
     
     
     public void gameLoop() {
-        // Preventing ball having too much speed and glitching through players
-        // In this case we pass in 22.4 as a safe speed for one frame
-        int deltaTime = 1000/Settings.FPS*ball.speed < 22.4 ? 1000/Settings.FPS : (int)Math.round(22.4/ball.speed);
-        
-        // By multiplying speed with delta time the players and the ball will always look like it is moving the same speed, no matter what FPS you set
-        Player.speed = Settings.playerSpeed*deltaTime;
-        Ball.speed = Settings.ballSpeed*deltaTime;
-        
         roundStartTime = System.currentTimeMillis();
         ball.randomDir(); // Setting random direction for ball velocity
         
@@ -89,7 +87,7 @@ public class Main {
     
     public void endGameMenu() {
         ball.setVisible(false); // If we didnt set the ball unvisible, we wouldnt see the text clearly
-        window.gamePanel.showEndingScreen(player1.points == Settings.winningPoints ? "Left side won" : "Right side won");
+        window.gamePanel.showEndingScreen(player1.points == winningPoints ? "Left side won" : "Right side won");
         while (!window.repeat) {
             try {
                 Thread.sleep(10);
@@ -161,7 +159,7 @@ public class Main {
             player1.scored(window.gamePanel.scoreLabel1);
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), true);
             roundStartTime = System.currentTimeMillis();
-            window.repeat = player1.points != Settings.winningPoints; // Checking if player1 didnt win
+            window.repeat = player1.points != winningPoints; // Checking if player1 didnt win
             
             scoreClip.setMicrosecondPosition(0);
             scoreClip.start();
@@ -170,7 +168,7 @@ public class Main {
             player2.scored(window.gamePanel.scoreLabel2);
             ball.scored(window.gamePanel.getWidth(), window.gamePanel.getHeight(), false);
             roundStartTime = System.currentTimeMillis(); // Reseting our round time
-            window.repeat = player2.points != Settings.winningPoints; // Checking if player2 didnt win
+            window.repeat = player2.points != winningPoints; // Checking if player2 didnt win
             
             scoreClip.setMicrosecondPosition(0);
             scoreClip.start();

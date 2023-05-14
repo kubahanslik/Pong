@@ -14,51 +14,68 @@ import javax.swing.JPanel;
  *
  * @author jakub
  */
-public class GamePanel extends JPanel {
+public class MainPanel extends JPanel {
     Player player1, player2;
     Ball ball;
     JLabel scoreLabel1, scoreLabel2, messageLabel, playAgainLabel;
     JPanel endingScreenPanel;
     
-    public GamePanel(int width, int height) {
+    public static final int scoreFontSize = 40;
+    public static final int scoreLabelWidth = 60;
+    public static final int scoreLabelHeight = 40;
+    public static final int scoreMarginX = 300;
+    public static final int scoreMarginY = 20;
+    
+    public static final int endingPanelWidth = 500;
+    public static final int endingPanelHeight = 100;
+    
+    public static final int messageFontSize = 40;
+    public static final int messageWidth = 500;
+    public static final int messageHeight = 60;
+    
+    public static final int playAgainFontSize = 20;
+    public static final int playAgainWidth = 300;
+    public static final int playAgainHeight = 40;
+    
+    public MainPanel(int width, int height) {
         this.setSize(width, height);
         this.setLayout(null); // Setting layout manager to null, because we are programming a game and want to manage positions of our components ourselfs
         this.setBackground(Color.black);
         
-        player1 = new Player( Settings.marginFromSideWall, this.getHeight()/2 - Settings.playerHeight/2);
-        player2 = new Player(this.getWidth() - Settings.marginFromSideWall - Settings.playerWidth, this.getHeight()/2 - Settings.playerHeight/2);
-        ball = new Ball(this.getWidth()/2 - Settings.ballRadius, this.getHeight()/2 - Settings.ballRadius);
+        player1 = new Player( Player.marginFromSideWall, this.getHeight()/2 - Player.playerHeight/2);
+        player2 = new Player(this.getWidth() - Player.marginFromSideWall - Player.playerWidth, this.getHeight()/2 - Player.playerHeight/2);
+        ball = new Ball(this.getWidth()/2 - Ball.ballRadius, this.getHeight()/2 - Ball.ballRadius);
         
-        Font scoreFont = new Font("Arial", Font.BOLD, Settings.scoreFontSize); // Saving the font to a variable so if we want to change it we can do it just here
+        Font scoreFont = new Font("Arial", Font.BOLD, scoreFontSize); // Saving the font to a variable so if we want to change it we can do it just here
         
         scoreLabel1 = new JLabel("0");
-        scoreLabel1.setBounds(Settings.scoreMarginX, Settings.scoreMarginY, Settings.scoreLabelWidth, Settings.scoreLabelHeight);
+        scoreLabel1.setBounds(scoreMarginX, scoreMarginY, scoreLabelWidth, scoreLabelHeight);
         scoreLabel1.setHorizontalAlignment(JLabel.CENTER);
         scoreLabel1.setFont(scoreFont);
         
         scoreLabel2 = new JLabel("0");
-        scoreLabel2.setBounds(this.getWidth() - Settings.scoreMarginX - Settings.scoreLabelWidth, Settings.scoreMarginY, Settings.scoreLabelWidth, Settings.scoreLabelHeight);
+        scoreLabel2.setBounds(this.getWidth() - scoreMarginX - scoreLabelWidth, scoreMarginY, scoreLabelWidth, scoreLabelHeight);
         scoreLabel2.setHorizontalAlignment(JLabel.CENTER);
         scoreLabel2.setFont(scoreFont);
         
         endingScreenPanel = new JPanel(new BorderLayout()); // Setting border layout will make it easier to manage the size and positioning of our text
-        endingScreenPanel.setBounds(this.getWidth()/2 - Settings.endingScreenWidth/2, this.getHeight()/2 - Settings.endingScreenHeight/2, Settings.endingScreenWidth, Settings.endingScreenHeight);
+        endingScreenPanel.setBounds(this.getWidth()/2 - endingPanelWidth/2, this.getHeight()/2 - endingPanelHeight/2, endingPanelWidth, endingPanelHeight);
         endingScreenPanel.setBackground(Color.black);
         endingScreenPanel.setVisible(false);
         
         messageLabel = new JLabel();
-        messageLabel.setSize(Settings.messageWidth, Settings.messageHeight);
+        messageLabel.setSize(messageWidth, messageHeight);
         messageLabel.setForeground(Color.white);
         messageLabel.setHorizontalAlignment(JLabel.CENTER);
         messageLabel.setVerticalAlignment(JLabel.TOP);
-        messageLabel.setFont(new Font("Arial", Font.BOLD, Settings.messageFontSize));
+        messageLabel.setFont(new Font("Arial", Font.BOLD, messageFontSize));
         
         playAgainLabel = new JLabel("Press space to play again");
-        playAgainLabel.setSize(Settings.playAgainWidth, Settings.playAgainHeight);
+        playAgainLabel.setSize(playAgainWidth, playAgainHeight);
         playAgainLabel.setForeground(Color.white);
         playAgainLabel.setHorizontalAlignment(JLabel.CENTER);
         playAgainLabel.setVerticalAlignment(JLabel.BOTTOM);
-        playAgainLabel.setFont(new Font("Arial", Font.BOLD, Settings.playAgainFontSize));
+        playAgainLabel.setFont(new Font("Arial", Font.BOLD, playAgainFontSize));
         
         endingScreenPanel.add(messageLabel);
         endingScreenPanel.add(playAgainLabel);
@@ -81,9 +98,9 @@ public class GamePanel extends JPanel {
     }
     
     public void resetComponents() {
-        player1.init(Settings.marginFromSideWall, this.getHeight()/2 - Settings.playerHeight/2);
-        player2.init(this.getWidth() - Settings.marginFromSideWall - Settings.playerWidth, this.getHeight()/2 - Settings.playerHeight/2);
-        ball.init(this.getWidth()/2 - Settings.ballRadius, this.getHeight()/2 - Settings.ballRadius);
+        player1.init(Player.marginFromSideWall, this.getHeight()/2 - Player.playerHeight/2);
+        player2.init(this.getWidth() - Player.marginFromSideWall - Player.playerWidth, this.getHeight()/2 - Player.playerHeight/2);
+        ball.init(this.getWidth()/2 - Ball.ballRadius, this.getHeight()/2 - Ball.ballRadius);
         
         scoreLabel1.setText("0");
         scoreLabel2.setText("0");

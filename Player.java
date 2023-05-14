@@ -15,8 +15,13 @@ import javax.swing.JPanel;
 public class Player extends JPanel {
     boolean up, down;
     float posY;
-    static float speed = 0.5f;
     int points;
+    
+    public static float speed = 0.5f;
+    public static final float playerSpeed = 0.5f;
+    public static final int playerWidth = 12;
+    public static final int playerHeight = 90;
+    public static final int marginFromSideWall = 20;
     
     public Player(int x, int y) {
         init(x, y);
@@ -24,7 +29,7 @@ public class Player extends JPanel {
     
     // Making function for initialization of our object will make it easier in the future to reset position of our player
     public void init(int x, int y) {
-        this.setBounds(x, y, Settings.playerWidth, Settings.playerHeight);
+        this.setBounds(x, y, playerWidth, playerHeight);
         this.setBackground(Color.gray);
         
         posY = y;
@@ -48,7 +53,7 @@ public class Player extends JPanel {
         this.setLocation(this.getX(), Math.round(posY));
     }
     
-    // Creating getCenterY method will make some of our calculations more readeable
+    // getCenterY method will make some of our calculations more readeable
     public int getCenterY() {
         return this.getY() + this.getHeight()/2;
     }
