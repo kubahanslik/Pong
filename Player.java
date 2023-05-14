@@ -54,6 +54,6 @@ public class Player extends JPanel {
     
     // getCenterY method will make some of our calculations more readeable
     public int getCenterY() {
-        return this.getY() + this.getHeight()/2;
+        return this.getY() + HEIGHT/2;
     }
 }

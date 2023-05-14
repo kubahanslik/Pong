@@ -47,7 +47,7 @@ public class Ball extends JPanel {
     }
     
     public void scored(int width, int height, boolean side) { // Setting side parameter as a boolean will make it easy to give the ball right direction
-        this.setLocation(width / 2 - this.getWidth() / 2, height / 2 - this.getHeight() / 2);
+        this.setLocation(width / 2 - WIDTH / 2, height / 2 - HEIGHT / 2);
         
         posX = this.getX();
         posY = this.getY();
@@ -57,7 +57,7 @@ public class Ball extends JPanel {
     }
     
     public void playerColl(Player p, boolean side) {
-        int angle = Math.round((this.getCenterY() - p.getCenterY())/((float)p.getHeight()/2)*(MAX_BOUNCE_ANGLE/2));
+        int angle = Math.round((this.getCenterY() - p.getCenterY())/((float)Player.HEIGHT/2)*(MAX_BOUNCE_ANGLE/2));
         
         velY = (float)(Math.sin(Math.toRadians(angle))*speed);
         velX = side ? (float)(Math.cos(Math.toRadians(angle))*speed) : -(float)(Math.cos(Math.toRadians(angle))*speed);
@@ -68,10 +68,10 @@ public class Ball extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         
         g2d.setPaint(Color.white);
-        g2d.fillOval(0, 0, this.getWidth(), this.getWidth());
+        g2d.fillOval(0, 0, DIAMETER, DIAMETER);
     }
     
     public int getCenterY() {
-        return this.getY() + this.getHeight()/2;
+        return this.getY() + DIAMETER/2;
     }
 }
